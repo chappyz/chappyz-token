@@ -4,12 +4,10 @@ pragma solidity ^0.8.20;
 
 import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import { ERC20Burnable } from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-import { ERC20Capped } from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
 import { ERC20Permit } from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 
 contract ChappyzToken is
   ERC20,
-  ERC20Capped,
   ERC20Burnable,
   ERC20Permit
 {
@@ -19,7 +17,7 @@ contract ChappyzToken is
   /**
   * Cap to 10B tokens on TGE.
   */
-  constructor() ERC20("Chappyz", "CHAPZ") ERC20Capped(TOTAL_SUPPLY) ERC20Permit("Chappyz") {
+  constructor() ERC20("Chappyz", "CHAPZ") ERC20Permit("Chappyz") {
     _mint(0x7B32fadEd0C842B9ead0054d6688A7B92548B7A8, 750000000 * (10 ** 10));  // pre-seed
     _mint(0xbd83c509DF139cEb5944855C7f312986de1d2d75, 750000000 * (10 ** 10));  // seed
     _mint(0xA26C8Fd8DCAe2E7D23Ece6Ab357fbff40Ffccf52, 500000000 * (10 ** 10));  // strategic
@@ -36,13 +34,6 @@ contract ChappyzToken is
   */
   function decimals() public pure override returns (uint8) {
     return 10;
-  }
-
-  /**
-  * @dev See {ERC20-_update}.
-  */
-  function _update(address from, address to, uint256 value) internal virtual override(ERC20, ERC20Capped) {
-    ERC20Capped._update(from, to, value);
   }
 
 }
